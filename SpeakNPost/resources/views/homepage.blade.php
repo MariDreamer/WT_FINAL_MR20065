@@ -1,44 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Homepage</title>
 
-<style>
-    html 
-    {
-        
-        display: block;
-        font-family: 'Nunito', sans-serif;
-        background: rgba(60, 40, 72, 1);
+@extends('layouts.app')
 
-    }
-    body
-    {
-        display: block;
-        max-width: 60em;
-        padding: 0 20px;
-        margin: 6em auto 19em;
-        background: rgba(37, 14, 76, 1);
-        position: relative;
-        box-shadow: 0 0.3em 1em #000;
-    }
-    
-</style>
-</head>
-<body>
-@csrf
-@if (count($voiceposts)==0)
-<p color='red'> There are no posts on Speak'N'Post yet! Be first to voicepost!</p>
-@else
-<p color='red'> Boo normal!</p>
-<div >
-    @foreach ( $voiceposts as $voicepost )
-        <p>
-            <a>{{ $voicepost->date }} {{ $voicepost->t_name }} </a>
-        </p>
-    @endforeach
+@section('content')
+<div class="this">
+    @csrf
+    @if (count($voiceposts)==0)
+    <div class="nada" style="height: 100vh; vertical-align: middle;"> <span class="boo" style="display: inline-block; vertical-align: middle; margin-top: 50vh;">There are no posts on Speak'N'Post yet! Be first to voicepost!</span></div>
+    @else
+    <p> Boo normal!</p>
+    <div >
+        @foreach ( $voiceposts as $voicepost )
+            <p>
+                <a>{{ $voicepost->date }} {{ $voicepost->url_vp }} {{ $voicepost->t_name }} </a>
+            </p>
+        @endforeach
+    </div>
+    @endif
 </div>
-@endif
-
-</body>
-</html>
+@endsection

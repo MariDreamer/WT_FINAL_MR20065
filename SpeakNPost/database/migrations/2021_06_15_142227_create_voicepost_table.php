@@ -21,6 +21,7 @@ class CreateVoicepostTable extends Migration
             $table->foreignId('t_name');
             $table->foreignId('st_name');
             $table->string('date');
+            $table->string('url_vp');
         });
     }
 

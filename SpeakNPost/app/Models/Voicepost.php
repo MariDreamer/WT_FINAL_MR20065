@@ -29,4 +29,9 @@ class Voicepost extends Model
     {
         return $this->hasMany(Replypost::class);
     }
+
+    public function like()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

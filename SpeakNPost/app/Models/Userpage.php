@@ -22,4 +22,9 @@ class Userpage extends Model
     {
         return $this->hasMany(Voicepost::class);
     }
+
+    public function subscribtion()
+    {
+        return $this->hasMany(Subscribtion::class);
+    }
 }

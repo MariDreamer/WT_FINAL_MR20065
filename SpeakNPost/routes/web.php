@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomepageController;
+use pp\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,10 @@ use App\Http\Controllers\HomepageController;
 // });
 
 
-Route::redirect('/', 'homepage');
-Route::resource('homepage', HomepageController::class);
+Auth::routes();
+
+
+
+Route::get('/homepage', [App\Http\Controllers\HomepageController::class, 'index']);
+Route::post('/homepage', [App\Http\Controllers\HomepageController::class, 'index'])->name('homepage');
+

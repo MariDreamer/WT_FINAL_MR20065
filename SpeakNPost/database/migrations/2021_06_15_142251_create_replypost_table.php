@@ -20,6 +20,7 @@ class CreateReplypostTable extends Migration
             $table->foreignId('vp_id');
             $table->foreignId('usernamne');
             $table->string('date');
+            $table->string('url_rp');
         });
     }
 

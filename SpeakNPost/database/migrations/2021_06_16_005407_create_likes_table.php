@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserpageTable extends Migration
+class CreateLikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateUserpageTable extends Migration
      */
     public function up()
     {
-        Schema::create('userpages', function (Blueprint $table) {
-            $table->id('page_id');
+        Schema::create('likes', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->foreignId('username')->unique();
-            $table->string('description');
-            // $table->binary('photo');
+            $table->foreignId('username');
+            $table->foreignId('vp_id');
+            $table->foreignId('t_name');
         });
-        
     }
 
     /**
@@ -30,6 +29,6 @@ class CreateUserpageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('userpages');
+        Schema::dropIfExists('likes');
     }
 }
