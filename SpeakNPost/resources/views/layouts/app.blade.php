@@ -226,7 +226,12 @@ a:visited
     @auth
     <li class="sub-menu-caption ">Profile
         <ul class="sub-menu">
-            <li><a :href="route('userpage.index')" :active="request()->routeIs('userpage.index')">My Page</a></li>
+            <li>
+            <form method="POST" action="{{ route('userpage') }}">
+                @csrf
+                <a href="{{ route('userpage') }}">{{ __('My page') }}</a>
+            </form>
+            </li>
             <li>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"

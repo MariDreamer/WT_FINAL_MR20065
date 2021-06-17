@@ -8,8 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     /*
@@ -32,93 +33,69 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('guest');
-    // }
-
-    // /**
-    //  * Get a validator for an incoming registration request.
-    //  *
-    //  * @param  array  $data
-    //  * @return \Illuminate\Contracts\Validation\Validator
-    //  */
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'username' => ['required', 'string', 'max:255', 'unique:users'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
-    //     ]);
-    // }
-
-    // /**
-    //  * Create a new user instance after a valid registration.
-    //  *
-    //  * @param  array  $data
-    //  * @return \App\Models\User
-    //  */
-    // protected function create(array $data)
-    // {
-    //     return User::create([
-    //         'username' => $data['username'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    //     // event(new Registered($user));
-
-    //     // Auth::login($user);
-
-    //     return redirect()->intended('homepage');
-    // }
     /**
-    * Display the registration view.
-    *
-    * @return \Illuminate\View\View
-    */
-   public function create()
-   {
-       return view('register');
-   }
-
-   /**
-     * Handle an incoming registration request.
+     * Create a new controller instance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @return void
      */
-    public function store(Request $request)
+    public function __construct()
     {
-        // $request->validate([
-        //     'username' => 'required|string|max:255|unique:users',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|confirmed|min:8',
-        // ]);
-        $this->validate($request, [
-                    'username' => ['required', 'string', 'max:255', 'unique:users'],
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                ]);
-
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
-        //return redirect()->intended('homepage');
+        $this->middleware('guest');
     }
 
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator($request)
+    {
+        
+        $this->create($request);
+
+        $validation = Validator::make($request, [
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        return $validation;
+        
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * 
+     */
+    protected function create($request)
+    {
+        
+        $user= new User;
+
+        $smth=array();
+        $k=0;
+
+        foreach ($request as $req)
+        {
+            $smth[$k]=$req;
+            $k=$k+1;
+        }
+        
+
+        $user->username = $smth[1];
+        $user->email = $smth[2];
+        $user->password = Hash::make($smth[3]);
+
+
+        $user->save();
+        Auth::login($user);
+        return redirect()->intended('homepage');
+    }
+
+    function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+    
 }

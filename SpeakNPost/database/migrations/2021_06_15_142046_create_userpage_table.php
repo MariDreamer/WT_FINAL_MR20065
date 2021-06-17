@@ -18,7 +18,7 @@ class CreateUserpageTable extends Migration
             $table->timestamps();
             $table->foreignId('username')->unique();
             $table->string('description');
-            // $table->binary('photo');
+            $table->string('photo');
         });
         
     }

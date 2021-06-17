@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-// use App\Model\User;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -38,26 +40,72 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        //$user = User::where('email','=', $request->email)->first();
-        //Auth::login();
-        return redirect()->intended('homepage');
     }
-    /**
-     * Destroy an authenticated session.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Request $request)
+    public function redirectToGoogle()
     {
-        // $user = User::where('email','=', $request->email)->first();
-        // Auth::logout($user);
-        // $request->session()->invalidate();
-        Auth::logout();
-        // $request->session()->regenerateToken();
-        //$request -> Auth::logout();
-        //$this->middleware('guest');
-        return redirect('homepage');
+        return Socialite::driver('google')->stateless()->redirect();
     }
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->stateless()->user();
+        $this->_registerOrLoginUser($user);
+
+        return redirect()->route('homepage');
+    }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->stateless()->redirect();
+    }
+    public function handleFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->stateless()->user();
+        $this->_registerOrLoginUser($user);
+
+        return redirect()->route('homepage');
+    }
+
     
+    // Route::get('/auth/redirect', function () {
+//     return Socialite::driver('google')->redirect();
+// });
+
+// Route::get('/auth/callback', function () {
+//     $user = Socialite::driver('google')->user();
+
+//     // $user->token
+// });
+
+// Route::get('/auth/redirect', function () {
+//     return Socialite::driver('facebook')->redirect();
+// });
+
+// Route::get('/auth/callback', function () {
+//     $user = Socialite::driver('facebook')->user();
+
+//     // $user->token
+// });
+
+    protected function _registerOrLoginUser($data)
+    {
+        $user = User::where('email','=', $data->email)->first();
+        if(!($user->email))
+        {
+            // $user = new User();
+            // $user->username = $data->username;
+            // $user->email = $data->email;
+            // $user->provider_id = $data->id;
+            // //$user->avatar= $data->avatar;
+            // $user->save;
+
+            return User::create([
+                'username' => $data->username,
+                'email' => $data->email,
+                'password' => $data->password,
+            ]);
+    
+        }
+        Auth::login($user);
+    }
+
 }

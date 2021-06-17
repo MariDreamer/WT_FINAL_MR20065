@@ -5,25 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Voicepost;
 use App\Model\Topic;
-use App\Model\Subtopic;
+use App\Model\User;
 use App\Model\Userpage;
-use Illuminate\Support\Facades\DB;      
+use App\Model\Subtopic;
+use Illuminate\Support\Facades\DB;
 
-class HomepageController extends Controller
+class UserpageController extends Controller
 {
+
+    public function __construct() {
+        // only Admins have access to the following methods
+        //$this->middleware('auth.admin')->only(['create', 'store']);
+        // only authenticated users have access to the methods of the controller
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $voiceposts=Voicepost::orderBy('date')->get();
-
-        // $search = $request->input('search');
-
-        return view('homepage', compact('voiceposts'));
+        if (DB::table('userpages')->where('username', auth()->user()->id)->first()==null)
+        {
+            return UserpageController:: store(auth()->user()->id);
+        }
+        else
+        {
+            return UserpageController:: show(auth()->user()->id);
+        }
     }
 
     /**
@@ -39,12 +51,18 @@ class HomepageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        //
+        $userpage= new Userpage;
+        $userpage->username=auth()->user()->id;
+        $userpage->description="Hey there! I'm on Speak'N'Post now:)"; 
+        $userpage->photo=URL::asset('public/pic/user.png');
+        $userpage->save();
+
+        return UserpageController:: show(auth()->user()->id);
     }
 
     /**
@@ -55,7 +73,10 @@ class HomepageController extends Controller
      */
     public function show($id)
     {
-        //
+        $userpage = DB::table('userpages')->where('username', $id)->first();
+        $voiceposts=Voicepost::orderBy('date')->where('username', $id)->get();
+
+        return view('userpage', compact('userpage', 'voiceposts'));
     }
 
     /**
