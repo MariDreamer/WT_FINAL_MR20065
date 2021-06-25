@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Voicepost;
-use App\Model\Topic;
-use App\Model\Subtopic;
-use App\Model\Userpage;
+use App\Models\Topic;
+use App\Models\Subtopic;
+use App\Models\Userpage;
 use Illuminate\Support\Facades\DB;      
 
 class HomepageController extends Controller

@@ -17,8 +17,8 @@ class CreateReplypostTable extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('rp_id')->unique();            
-            $table->foreignId('vp_id');
-            $table->foreignId('usernamne');
+            $table->foreignId('vp_id')->constrained('voiceposts');
+            $table->foreignId('usernamne')->constrained('users');
             $table->string('date');
             $table->string('url_rp');
         });

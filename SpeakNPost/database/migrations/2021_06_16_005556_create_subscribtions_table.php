@@ -16,8 +16,8 @@ class CreateSubscribtionsTable extends Migration
         Schema::create('subscribtions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('username');
-            $table->foreignId('page_id');
+            $table->foreignId('username')->constrained('users');
+            $table->foreignId('page_id')->constrained('userpages');
         });
     }
 

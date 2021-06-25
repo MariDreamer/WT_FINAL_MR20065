@@ -17,7 +17,7 @@ class CreateSubtopicTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('st_name')->unique();
-            $table->foreignId('t_id');
+            $table->foreignId('t_id')->constrained('topics');
         });
     }
 

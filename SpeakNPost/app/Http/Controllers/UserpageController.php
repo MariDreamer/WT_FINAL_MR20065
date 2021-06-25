@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Voicepost;
-use App\Model\Topic;
-use App\Model\User;
-use App\Model\Userpage;
-use App\Model\Subtopic;
+use App\Models\Topic;
+use App\Models\User;
+use App\Models\Userpage;
+use App\Models\Subtopic;
 use Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\URL;
 
 class UserpageController extends Controller
 {
@@ -59,7 +60,7 @@ class UserpageController extends Controller
         $userpage= new Userpage;
         $userpage->username=auth()->user()->id;
         $userpage->description="Hey there! I'm on Speak'N'Post now:)"; 
-        $userpage->photo=URL::asset('public/pic/user.png');
+        $userpage->photo=URL::asset('/public/pic/user.png');
         $userpage->save();
 
         return UserpageController:: show(auth()->user()->id);
@@ -74,7 +75,7 @@ class UserpageController extends Controller
     public function show($id)
     {
         $userpage = DB::table('userpages')->where('username', $id)->first();
-        $voiceposts=Voicepost::orderBy('date')->where('username', $id)->get();
+        $voiceposts=Voicepost::orderBy('date')->where('usernamne', $id)->get();
 
         return view('userpage', compact('userpage', 'voiceposts'));
     }

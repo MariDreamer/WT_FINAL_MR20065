@@ -76,10 +76,14 @@ class DatabaseSeeder extends Seeder
 
 
 
-        Schema::enableForeignKeyConstraints();
+        // Schema::enableForeignKeyConstraints();
 
 
         User::truncate();
+
+        Schema::enableForeignKeyConstraints();
+
+
         User::create(array('username' => 'Administrator',
                            'email' => 'admin@speaknpost.soci', 
                            'password' => bcrypt('mr20065'),

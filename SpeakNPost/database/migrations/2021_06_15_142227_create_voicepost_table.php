@@ -17,9 +17,9 @@ class CreateVoicepostTable extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('vp_id')->unique();
-            $table->foreignId('usernamne');
-            $table->foreignId('t_name');
-            $table->foreignId('st_name');
+            $table->foreignId('usernamne')->constrained('userpages');
+            $table->foreignId('t_name')->constrained('topics');
+            $table->foreignId('st_name')->constrained('subtopics');
             $table->string('date');
             $table->string('url_vp');
         });

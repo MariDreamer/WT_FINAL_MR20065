@@ -49,6 +49,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
+        return route('homepage');
+        //return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Destroy an authenticated session.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function loggedOut(Request $request) {
+
         return redirect('/homepage');
+    
     }
 }

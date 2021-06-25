@@ -14,9 +14,10 @@ class CreateUserpageTable extends Migration
     public function up()
     {
         Schema::create('userpages', function (Blueprint $table) {
-            $table->id('page_id');
+            $table->id();
             $table->timestamps();
-            $table->foreignId('username')->unique();
+            //$table->foreignId('username')->unique();
+            $table->foreignId('username')->constrained('users');
             $table->string('description');
             $table->string('photo');
         });

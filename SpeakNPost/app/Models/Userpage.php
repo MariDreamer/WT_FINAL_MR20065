@@ -11,7 +11,7 @@ class Userpage extends Model
 {
     use HasFactory;
 
-    protected $table = 'userpage';
+    //protected $table = 'userpages';
 
     public function user()
     {
