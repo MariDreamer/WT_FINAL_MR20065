@@ -199,6 +199,11 @@
     text-decoration: none;
 }
 
+a
+{
+    text-decoration: none;
+}
+
 a:visited 
 {
     color: rgba(200, 200, 200, 1);
@@ -210,6 +215,12 @@ a:visited
     border: none;
     padding: 15px;
     margin: 5px;
+}
+
+.dropdown-item
+{
+    text-decoration: none;
+    color: rgba(200, 200, 200, 1);
 }
 
     </style>
@@ -224,17 +235,39 @@ a:visited
             <a href="route('homepage')"
                     onclick="event.preventDefault();
                                 this.closest('form').submit();">
-                {{ __('Home') }}
+                {{ __('lang.home') }}
             </a>
         </form>
     </li>
+
+
+    <li class="sub-menu-caption">
+        <ul class="sub-menu">
+            <li>
+                <a class="dropdown-item" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ Config::get('languages')[App::getLocale()] }}
+                </a>
+            </li>
+            <li>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                @foreach (Config::get('languages') as $lang => $language)
+                    @if ($lang != App::getLocale())
+                            <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                    @endif
+                @endforeach
+                </div>
+            </li>
+        </ul>
+    </li>
+
+
     @auth
-    <li class="sub-menu-caption ">Profile
+    <li class="sub-menu-caption ">{{ __('lang.profile') }}
         <ul class="sub-menu">
             <li>
             <form method="POST" action="{{ route('userpage') }}">
                 @csrf
-                <a href="{{ route('userpage') }}">{{ __('My page') }}</a>
+                <a href="{{ route('userpage') }}">{{ __('lang.userpage') }}</a>
             </form>
             </li>
             <li>
@@ -246,7 +279,7 @@ a:visited
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+                        {{ __('lang.logout') }}
                     </a>
                     </form>
                     <!-- <form method="POST" action="{{ route('logout') }}">
@@ -263,13 +296,13 @@ a:visited
     <li class="sub-menu-caption">
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <a href="{{ route('login') }}">{{ __('Login') }}</a>
+            <a href="{{ route('login') }}">{{ __('lang.div') }}</a>
         </form>
     </li>
     <li class="sub-menu-caption">
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <a href="{{ route('register') }}">{{ __('Register') }}</a>
+            <a href="{{ route('register') }}">{{ __('lang.button1') }}</a>
         </form>
     </li>
     @endguest

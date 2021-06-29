@@ -12,6 +12,18 @@
     'label4' => 'E-Mail Address',
     'label5' => 'Password',
     'label6' => 'Confirm Password',
-    'button1' => 'Register']
+    'button1' => 'Register',
+
+    'home' => 'Home',
+    'profile' => 'Profile',
+    'userpage'=>'My page',
+    'logout'=>'Logout',
+    'edit'=>'Edit',
+    'search'=>'Search',
+    'post'=>'New post',
+    'cnpp'=>'Choose new profile pic:',
+    'upd'=>'Update',
+    'subscribe'=>'Subscribe'
+    ]
 ?>
 

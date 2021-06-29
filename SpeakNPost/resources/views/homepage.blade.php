@@ -5,7 +5,7 @@
 <div class="this">
     @csrf
     @if (count($voiceposts)==0)
-    <div class="nada" style="height: 100vh; vertical-align: middle;"> <span class="boo" style="display: inline-block; vertical-align: middle; margin-top: 50vh;">{{ __('lang.span')}}</span></div>
+    <div class="nada" style="vertical-align: middle;"> <span class="boo" style="display: inline-block; vertical-align: middle; margin-top: 50vh;">{{ __('lang.span')}}</span></div>
     @else
     <p> Boo normal!</p>
     <div >

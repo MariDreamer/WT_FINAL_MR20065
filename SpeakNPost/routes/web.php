@@ -34,6 +34,12 @@ Route::post('/homepage', [App\Http\Controllers\HomepageController::class, 'index
 Route::get('/userpage', [App\Http\Controllers\UserpageController::class, 'index']);
 Route::post('/userpage', [App\Http\Controllers\UserpageController::class, 'index'])->name('userpage');
 
+Route::get('/userpage/edit', [App\Http\Controllers\UserpageController::class, 'edit']);
+Route::post('/userpage/edit', [App\Http\Controllers\UserpageController::class, 'edit'])->name('edit');
+
+Route::get('/userpage/update', [App\Http\Controllers\UserpageController::class, 'update']);
+Route::post('/userpage/update', [App\Http\Controllers\UserpageController::class, 'update'])->name('update');
+
 
 Auth::routes();
 
@@ -49,4 +55,5 @@ Route::get('/homepage/{lang}', function ($lang) {
     return view('/homepage');
 });
 
-// Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+

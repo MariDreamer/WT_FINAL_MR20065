@@ -60,7 +60,7 @@ class UserpageController extends Controller
         $userpage= new Userpage;
         $userpage->username=auth()->user()->id;
         $userpage->description="Hey there! I'm on Speak'N'Post now:)"; 
-        $userpage->photo=URL::asset('/public/pic/user.png');
+        $userpage->photo=URL::asset('user.png');
         $userpage->save();
 
         return UserpageController:: show(auth()->user()->id);
@@ -84,11 +84,15 @@ class UserpageController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
         //
+        $userpage = DB::table('userpages')->where('username', auth()->user()->id)->first();
+        return view('userpage-edit', compact('userpage'));
+
     }
 
     /**
@@ -98,9 +102,39 @@ class UserpageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $id = DB::table('userpages')->where('username', auth()->user()->id)->first()->id;
+
+        $userpage=Userpage::find($id);
+
+
+        //$input=$request->all();
+        if ($request->file('photo')!=NULL)
+        {
+            $dest='/public/pic';
+            $photo=$request->file('photo');
+            $img_name=$photo->getClientOriginalName();
+            $path=$request->file('photo')->storeAs($dest,$img_name);
+            //$input['photo']=$img_name;
+
+            $userpage->photo=$img_name;
+            $userpage->save();
+            //$userpage->updateOrInsert(['photo'=>$img_name]);
+
+        }
+
+        if ($request->description!="")
+        {
+            $userpage->description=$request->description;
+            $userpage->save();
+
+            //$userpage->updateOrInsert(['description'=>$request->description]);
+        }
+
+        //return UserpageController:: show(auth()->user()->id);
+        return redirect('userpage');
     }
 
     /**
