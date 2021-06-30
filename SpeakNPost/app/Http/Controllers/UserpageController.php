@@ -60,7 +60,7 @@ class UserpageController extends Controller
         $userpage= new Userpage;
         $userpage->username=auth()->user()->id;
         $userpage->description="Hey there! I'm on Speak'N'Post now:)"; 
-        $userpage->photo=URL::asset('user.png');
+        $userpage->photo='user.png';
         $userpage->save();
 
         return UserpageController:: show(auth()->user()->id);

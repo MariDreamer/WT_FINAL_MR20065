@@ -23,7 +23,16 @@
     'post'=>'New post',
     'cnpp'=>'Choose new profile pic:',
     'upd'=>'Update',
-    'subscribe'=>'Subscribe'
+    'subscribe'=>'Subscribe',
+    'lang'=>'Language',
+    'notopics'=>'There are no topics yet! You can add it now:',
+    'topics'=>'Topics',
+    'addtopic'=>'Add topic',
+    'addstopic'=>'Add subtopic',
+    'nostopics'=>'There are no subtopics yet! You can add it now:',
+    'del'=>'Delete',
+    'prs'=>'Reset Password',
+    'spm'=>'Send Password Reset Link',
     ]
 ?>
 

@@ -40,6 +40,28 @@ Route::post('/userpage/edit', [App\Http\Controllers\UserpageController::class, '
 Route::get('/userpage/update', [App\Http\Controllers\UserpageController::class, 'update']);
 Route::post('/userpage/update', [App\Http\Controllers\UserpageController::class, 'update'])->name('update');
 
+Route::get('/admin', [App\Http\Controllers\TopicController::class, 'index']);
+Route::post('/admin', [App\Http\Controllers\TopicController::class, 'index'])->name('admin');
+
+Route::get('/admin/addtopic', [App\Http\Controllers\TopicController::class, 'create']);
+Route::post('/admin/addtopic', [App\Http\Controllers\TopicController::class, 'create'])->name('addtopic');
+
+Route::get('/admin/addsubtopic', [App\Http\Controllers\SubtopicController::class, 'create']);
+Route::post('/admin/addsubtopic', [App\Http\Controllers\SubtopicController::class, 'create'])->name('addstopic');
+
+Route::get('/admin/savetopic', [App\Http\Controllers\TopicController::class, 'store']);
+Route::post('/admin/savetopic', [App\Http\Controllers\TopicController::class, 'store'])->name('savetopic');
+
+Route::get('/admin/savestopic', [App\Http\Controllers\SubtopicController::class, 'store']);
+Route::post('/admin/savestopic', [App\Http\Controllers\SubtopicController::class, 'store'])->name('savestopic');
+
+Route::get('/admin/deltopic', [App\Http\Controllers\TopicController::class, 'destroy']);
+Route::post('/admin/deltopic', [App\Http\Controllers\TopicController::class, 'destroy'])->name('deltopic');
+
+Route::get('/admin/delstopic', [App\Http\Controllers\SubtopicController::class, 'destroy']);
+Route::post('/admin/delstopic', [App\Http\Controllers\SubtopicController::class, 'destroy'])->name('delstopic');
+
+
 
 Auth::routes();
 
